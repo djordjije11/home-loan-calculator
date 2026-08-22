@@ -1,1 +1,8 @@
 spring.application.name: home-loan-calculator
+
+# Error handling
+error.handling:
+  exception-logging: NO_LOGGING
+  full-stacktrace-http-statuses[0]: 5xx
+  http-statuses:
+    java.lang.IllegalArgumentException: BAD_REQUEST

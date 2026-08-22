@@ -1,6 +1,5 @@
 package io.github.djordjije11.homeloancalculator.infra.web.rest;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Max;
@@ -18,9 +17,8 @@ public record ElapsedRepaymentRequest(@Schema(description = "Principal at the st
                                       @Schema(description = "Completed repayment period in whole months",
                                               example = "24") @NotNull @PositiveOrZero Integer elapsedRepaymentPeriod) {
 
-    @JsonIgnore
     @AssertTrue(message = "elapsedRepaymentPeriod must not exceed repaymentPeriod")
-    public boolean isElapsedRepaymentPeriodWithinRepaymentPeriod() {
+    private boolean isElapsedRepaymentPeriodWithinRepaymentPeriod() {
         return repaymentPeriod == null || elapsedRepaymentPeriod == null || elapsedRepaymentPeriod <= repaymentPeriod;
     }
 }
