@@ -1,4 +1,4 @@
-package io.github.djordjije11.homeloancalculator.infra.web.rest;
+package io.github.djordjije11.homeloancalculator.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
