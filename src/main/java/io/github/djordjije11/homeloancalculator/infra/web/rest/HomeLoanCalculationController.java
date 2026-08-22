@@ -7,6 +7,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,17 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/home-loan-calculations")
 @Tag(name = "Home loan calculations", description = "Illustrative fixed-rate monthly-annuity home-loan calculations. Results may differ from your bank's repayment plan.")
 public class HomeLoanCalculationController {
 
     private final HomeLoanCalculationService homeLoanCalculationService;
-
-    public HomeLoanCalculationController(HomeLoanCalculationService homeLoanCalculationService) {
-        this.homeLoanCalculationService = homeLoanCalculationService;
-    }
-
+    
     @PostMapping("/monthly-payment")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("permitAll()")

@@ -3,8 +3,11 @@ package io.github.djordjije11.homeloancalculator.domain;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+
+import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
+@Component
 public final class HomeLoanCalculator {
 
     private static final BigDecimal ONE_HUNDRED = BigDecimal.valueOf(100);

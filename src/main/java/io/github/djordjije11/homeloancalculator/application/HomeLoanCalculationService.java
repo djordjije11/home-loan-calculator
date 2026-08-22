@@ -3,12 +3,15 @@ package io.github.djordjije11.homeloancalculator.application;
 import io.github.djordjije11.homeloancalculator.domain.HomeLoanCalculator;
 import io.github.djordjije11.homeloancalculator.domain.PartialRepaymentCalculation;
 import java.math.BigDecimal;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
 @Service
 public class HomeLoanCalculationService {
 
-    private final HomeLoanCalculator homeLoanCalculator = new HomeLoanCalculator();
+    private final HomeLoanCalculator homeLoanCalculator;
 
     public BigDecimal calculateMonthlyPayment(BigDecimal principalAmount, BigDecimal annualInterestRate, int repaymentPeriod) {
         return homeLoanCalculator.calculateMonthlyPayment(principalAmount, annualInterestRate, repaymentPeriod);
