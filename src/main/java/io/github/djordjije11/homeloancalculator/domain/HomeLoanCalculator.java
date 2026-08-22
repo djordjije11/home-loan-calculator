@@ -1,5 +1,6 @@
 package io.github.djordjije11.homeloancalculator.domain;
 
+import ch.obermuhlner.math.big.BigDecimalMath;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -63,8 +64,8 @@ public final class HomeLoanCalculator {
 
         BigDecimal logarithmArgument = BigDecimal.ONE.subtract(
                 principalAmount.multiply(monthlyInterestRate, MATH_CONTEXT).divide(monthlyPaymentAmount, MATH_CONTEXT));
-        BigDecimal repaymentPeriod = DecimalNaturalLogarithm.calculate(logarithmArgument, MATH_CONTEXT).negate()
-                .divide(DecimalNaturalLogarithm.calculate(BigDecimal.ONE.add(monthlyInterestRate), MATH_CONTEXT), MATH_CONTEXT);
+        BigDecimal repaymentPeriod = BigDecimalMath.log(logarithmArgument, MATH_CONTEXT).negate()
+                .divide(BigDecimalMath.log(BigDecimal.ONE.add(monthlyInterestRate), MATH_CONTEXT), MATH_CONTEXT);
         return repaymentPeriod.setScale(0, RoundingMode.CEILING).intValueExact();
     }
 

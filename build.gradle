@@ -24,6 +24,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-restclient'
     implementation 'org.apache.commons:commons-csv:1.14.1'
+    implementation 'ch.obermuhlner:big-math:2.3.2'
     implementation 'io.github.wimdeblauwe:error-handling-spring-boot-starter:5.1.1'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.1'
     compileOnly 'org.projectlombok:lombok:1.18.44'
