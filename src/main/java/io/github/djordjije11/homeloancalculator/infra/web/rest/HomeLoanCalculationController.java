@@ -31,7 +31,7 @@ public class HomeLoanCalculationController {
     @Operation(summary = "Calculate a monthly payment", description = "Uses a proportional monthly interest rate derived from the annual percentage interest rate.")
     public MonthlyPaymentResponse calculateMonthlyPayment(@Valid @RequestBody MonthlyPaymentRequest request) {
         return new MonthlyPaymentResponse(roundAmount(homeLoanCalculationService.calculateMonthlyPayment(
-                request.principalAmount(), request.annualInterestRate(), request.repaymentPeriod())));
+                request.principalAmount(), request.annualInterestRatePercentage(), request.repaymentPeriod())));
     }
 
     @PostMapping("/remaining-principal")
@@ -40,7 +40,7 @@ public class HomeLoanCalculationController {
     @Operation(summary = "Calculate remaining principal", description = "Calculates principal after the specified number of completed monthly payments.")
     public PrincipalResponse calculateRemainingPrincipal(@Valid @RequestBody ElapsedRepaymentRequest request) {
         return new PrincipalResponse(roundAmount(homeLoanCalculationService.calculateRemainingPrincipal(
-                request.principalAmount(), request.annualInterestRate(), request.repaymentPeriod(), request.elapsedRepaymentPeriod())));
+                request.principalAmount(), request.annualInterestRatePercentage(), request.repaymentPeriod(), request.elapsedRepaymentPeriod())));
     }
 
     @PostMapping("/paid-interest")
@@ -49,7 +49,7 @@ public class HomeLoanCalculationController {
     @Operation(summary = "Calculate paid interest", description = "Calculates cumulative regular interest through the specified number of completed monthly payments.")
     public InterestResponse calculatePaidInterest(@Valid @RequestBody ElapsedRepaymentRequest request) {
         return new InterestResponse(roundAmount(homeLoanCalculationService.calculatePaidInterest(
-                request.principalAmount(), request.annualInterestRate(), request.repaymentPeriod(), request.elapsedRepaymentPeriod())));
+                request.principalAmount(), request.annualInterestRatePercentage(), request.repaymentPeriod(), request.elapsedRepaymentPeriod())));
     }
 
     @PostMapping("/repayment-period")
@@ -58,7 +58,7 @@ public class HomeLoanCalculationController {
     @Operation(summary = "Calculate a repayment period", description = "Returns the required whole number of months, rounded up.")
     public RepaymentPeriodResponse calculateRepaymentPeriod(@Valid @RequestBody RepaymentPeriodRequest request) {
         return new RepaymentPeriodResponse(homeLoanCalculationService.calculateRepaymentPeriod(
-                request.principalAmount(), request.annualInterestRate(), request.monthlyPaymentAmount()));
+                request.principalAmount(), request.annualInterestRatePercentage(), request.monthlyPaymentAmount()));
     }
 
     @PostMapping("/partial-repayment")
@@ -68,7 +68,7 @@ public class HomeLoanCalculationController {
     public PartialRepaymentResponse calculatePartialRepayment(@Valid @RequestBody PartialRepaymentRequest request) {
         PartialRepaymentCalculation calculation = homeLoanCalculationService.calculatePartialRepayment(
                 request.principalAmount(),
-                request.annualInterestRate(),
+                request.annualInterestRatePercentage(),
                 request.repaymentPeriod(),
                 request.additionalPaymentAmount(),
                 request.monthlyPaymentAmount());

@@ -10,7 +10,7 @@ public record RepaymentPeriodRequest(
         @Schema(description = "Principal at the start of this calculation, in EUR", example = "50000.00")
         @NotNull @Positive @Max(9999999) BigDecimal principalAmount,
         @Schema(description = "Positive nominal annual interest rate expressed as a percentage", example = "4.5")
-        @NotNull @Positive BigDecimal annualInterestRate,
+        @NotNull @Positive BigDecimal annualInterestRatePercentage,
         @Schema(description = "Monthly payment in EUR", example = "897.91500")
         @NotNull @Positive @Max(9999999) BigDecimal monthlyPaymentAmount) {
 }

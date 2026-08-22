@@ -34,7 +34,7 @@ class HomeLoanCalculationControllerTest {
         mockMvc.perform(post("/api/v1/home-loan-calculations/monthly-payment")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
-                                {"principalAmount": 100000, "annualInterestRate": 1.5, "repaymentPeriod": 120}
+                                {"principalAmount": 100000, "annualInterestRatePercentage": 1.5, "repaymentPeriod": 120}
                                 """))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.monthlyPaymentAmount").value(897.915));
@@ -45,7 +45,7 @@ class HomeLoanCalculationControllerTest {
         mockMvc.perform(post("/api/v1/home-loan-calculations/remaining-principal")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
-                                {"principalAmount": 100000, "annualInterestRate": 1.5, "repaymentPeriod": 120, "elapsedRepaymentPeriod": 72}
+                                {"principalAmount": 100000, "annualInterestRatePercentage": 1.5, "repaymentPeriod": 120, "elapsedRepaymentPeriod": 72}
                                 """))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.principalAmount").value(41807.05088));
@@ -56,7 +56,7 @@ class HomeLoanCalculationControllerTest {
         mockMvc.perform(post("/api/v1/home-loan-calculations/paid-interest")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
-                                {"principalAmount": 100000, "annualInterestRate": 1.5, "repaymentPeriod": 120, "elapsedRepaymentPeriod": 72}
+                                {"principalAmount": 100000, "annualInterestRatePercentage": 1.5, "repaymentPeriod": 120, "elapsedRepaymentPeriod": 72}
                                 """))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.interestAmount").value(6456.93073));
@@ -67,7 +67,7 @@ class HomeLoanCalculationControllerTest {
         mockMvc.perform(post("/api/v1/home-loan-calculations/repayment-period")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
-                                {"principalAmount": 50000, "annualInterestRate": 1.5, "monthlyPaymentAmount": 897.915}
+                                {"principalAmount": 50000, "annualInterestRatePercentage": 1.5, "monthlyPaymentAmount": 897.915}
                                 """))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.repaymentPeriod").value(58));
@@ -78,7 +78,7 @@ class HomeLoanCalculationControllerTest {
         mockMvc.perform(post("/api/v1/home-loan-calculations/partial-repayment")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
-                                {"principalAmount": 70000, "annualInterestRate": 1.5, "repaymentPeriod": 84, "additionalPaymentAmount": 20000, "monthlyPaymentAmount": 1019.54}
+                                {"principalAmount": 70000, "annualInterestRatePercentage": 1.5, "repaymentPeriod": 84, "additionalPaymentAmount": 20000, "monthlyPaymentAmount": 1019.54}
                                 """))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.principalAmount").value(50000.00000))
@@ -91,7 +91,7 @@ class HomeLoanCalculationControllerTest {
         mockMvc.perform(post("/api/v1/home-loan-calculations/monthly-payment")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
-                                {"annualInterestRate": 1.5, "repaymentPeriod": 120}
+                                {"annualInterestRatePercentage": 1.5, "repaymentPeriod": 120}
                                 """))
                 .andExpect(status().isBadRequest());
     }
@@ -101,7 +101,7 @@ class HomeLoanCalculationControllerTest {
         mockMvc.perform(post("/api/v1/home-loan-calculations/repayment-period")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
-                                {"principalAmount": 100000, "annualInterestRate": 1.5, "monthlyPaymentAmount": 125}
+                                {"principalAmount": 100000, "annualInterestRatePercentage": 1.5, "monthlyPaymentAmount": 125}
                                 """))
                 .andExpect(status().isBadRequest());
     }

@@ -13,33 +13,33 @@ public class HomeLoanCalculationService {
 
     private final HomeLoanCalculator homeLoanCalculator;
 
-    public BigDecimal calculateMonthlyPayment(BigDecimal principalAmount, BigDecimal annualInterestRate, int repaymentPeriod) {
-        return homeLoanCalculator.calculateMonthlyPayment(principalAmount, annualInterestRate, repaymentPeriod);
+    public BigDecimal calculateMonthlyPayment(BigDecimal principalAmount, BigDecimal annualInterestRatePercentage, int repaymentPeriod) {
+        return homeLoanCalculator.calculateMonthlyPayment(principalAmount, annualInterestRatePercentage, repaymentPeriod);
     }
 
     public BigDecimal calculateRemainingPrincipal(
-            BigDecimal principalAmount, BigDecimal annualInterestRate, int repaymentPeriod, int elapsedRepaymentPeriod) {
+            BigDecimal principalAmount, BigDecimal annualInterestRatePercentage, int repaymentPeriod, int elapsedRepaymentPeriod) {
         return homeLoanCalculator.calculateRemainingPrincipal(
-                principalAmount, annualInterestRate, repaymentPeriod, elapsedRepaymentPeriod);
+                principalAmount, annualInterestRatePercentage, repaymentPeriod, elapsedRepaymentPeriod);
     }
 
     public BigDecimal calculatePaidInterest(
-            BigDecimal principalAmount, BigDecimal annualInterestRate, int repaymentPeriod, int elapsedRepaymentPeriod) {
+            BigDecimal principalAmount, BigDecimal annualInterestRatePercentage, int repaymentPeriod, int elapsedRepaymentPeriod) {
         return homeLoanCalculator.calculatePaidInterest(
-                principalAmount, annualInterestRate, repaymentPeriod, elapsedRepaymentPeriod);
+                principalAmount, annualInterestRatePercentage, repaymentPeriod, elapsedRepaymentPeriod);
     }
 
-    public int calculateRepaymentPeriod(BigDecimal principalAmount, BigDecimal annualInterestRate, BigDecimal monthlyPaymentAmount) {
-        return homeLoanCalculator.calculateRepaymentPeriod(principalAmount, annualInterestRate, monthlyPaymentAmount);
+    public int calculateRepaymentPeriod(BigDecimal principalAmount, BigDecimal annualInterestRatePercentage, BigDecimal monthlyPaymentAmount) {
+        return homeLoanCalculator.calculateRepaymentPeriod(principalAmount, annualInterestRatePercentage, monthlyPaymentAmount);
     }
 
     public PartialRepaymentCalculation calculatePartialRepayment(
             BigDecimal principalAmount,
-            BigDecimal annualInterestRate,
+            BigDecimal annualInterestRatePercentage,
             int repaymentPeriod,
             BigDecimal additionalPaymentAmount,
             BigDecimal monthlyPaymentAmount) {
         return homeLoanCalculator.calculatePartialRepayment(
-                principalAmount, annualInterestRate, repaymentPeriod, additionalPaymentAmount, monthlyPaymentAmount);
+                principalAmount, annualInterestRatePercentage, repaymentPeriod, additionalPaymentAmount, monthlyPaymentAmount);
     }
 }

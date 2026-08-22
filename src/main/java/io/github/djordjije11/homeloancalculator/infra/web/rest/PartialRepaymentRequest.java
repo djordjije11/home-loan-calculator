@@ -11,7 +11,7 @@ public record PartialRepaymentRequest(
         @Schema(description = "Current principal before the additional payment, in EUR", example = "41807.05090")
         @NotNull @Positive @Max(9999999) BigDecimal principalAmount,
         @Schema(description = "Positive nominal annual interest rate expressed as a percentage", example = "4.5")
-        @NotNull @Positive BigDecimal annualInterestRate,
+        @NotNull @Positive BigDecimal annualInterestRatePercentage,
         @Schema(description = "Remaining repayment period in whole months", example = "48")
         @NotNull @Positive Integer repaymentPeriod,
         @Schema(description = "Immediate additional payment applied to principal, in EUR", example = "10000.00")
