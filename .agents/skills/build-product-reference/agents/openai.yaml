@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build Product Reference"
+  short_description: "Research into product docs"
+  default_prompt: "Use $build-product-reference to research this product input and write comprehensive docs under docs/product-reference."
