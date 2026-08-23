@@ -1,4 +1,4 @@
-FROM 379129775379.dkr.ecr.eu-central-1.amazonaws.com/platform/autoscout24/deploy/java:corretto-25
+FROM amazoncorretto:25.0.4
 COPY --chown=10001:10001 build/libs/*-boot.jar /opt/home-loan-calculator/home-loan-calculator.jar
 COPY --chown=10001:10001 entrypoint.sh /opt/home-loan-calculator/entrypoint.sh
 WORKDIR /opt/home-loan-calculator
