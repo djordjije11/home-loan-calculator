@@ -1,18 +1,31 @@
-FROM amazoncorretto:25.0.4
-COPY --chown=10001:10001 build/libs/*-boot.jar /opt/home-loan-calculator/home-loan-calculator.jar
-COPY --chown=10001:10001 entrypoint.sh /opt/home-loan-calculator/entrypoint.sh
+FROM amazoncorretto:25.0.4 AS build
+
+WORKDIR /workspace
+
+COPY gradlew ./
+COPY gradle ./gradle
+COPY build.gradle gradle.properties settings.gradle ./
+COPY src ./src
+
+RUN chmod +x gradlew && ./gradlew bootJar --no-daemon
+
+FROM amazoncorretto:25.0.4-al2023-headless
+
+RUN groupadd --gid 10001 application \
+    && useradd --uid 10001 --gid 10001 --home-dir /opt/home-loan-calculator --no-create-home --shell /sbin/nologin application
+
 WORKDIR /opt/home-loan-calculator
+
+COPY --from=build --chown=10001:10001 /workspace/build/libs/*-boot.jar home-loan-calculator.jar
+COPY --chown=10001:10001 entrypoint.sh ./entrypoint.sh
+
 RUN chmod +x entrypoint.sh
-USER 10001:10001
+
+USER application:application
+
 ENTRYPOINT ["/opt/home-loan-calculator/entrypoint.sh"]
 
-# --------------------------------------------------------------------
-# Enable native access for Java 23+
-# Reference: JEP 471 (https://openjdk.org/jeps/471). Those flages:
-# --enable-native-access=ALL-UNNAMED
-# --sun-misc-unsafe-memory-access=allow
-# allow libraries like zstd-jni and Kafka (protobuf) to continue loading native code and using restricted APIs safely.
-# Without this, Java 23+ emits warnings and will block native access in future releases.
-# --------------------------------------------------------------------
+# Enable native access for Java 23+.
 CMD ["java", "--enable-native-access=ALL-UNNAMED", "--sun-misc-unsafe-memory-access=allow", "-jar", "home-loan-calculator.jar"]
+
 EXPOSE 8080
