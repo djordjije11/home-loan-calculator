@@ -11,9 +11,6 @@ RUN chmod +x gradlew && ./gradlew bootJar --no-daemon
 
 FROM amazoncorretto:25.0.4-al2023-headless
 
-RUN groupadd --gid 10001 application \
-    && useradd --uid 10001 --gid 10001 --home-dir /opt/home-loan-calculator --no-create-home --shell /sbin/nologin application
-
 WORKDIR /opt/home-loan-calculator
 
 COPY --from=build --chown=10001:10001 /workspace/build/libs/*-boot.jar home-loan-calculator.jar
@@ -21,7 +18,7 @@ COPY --chown=10001:10001 entrypoint.sh ./entrypoint.sh
 
 RUN chmod +x entrypoint.sh
 
-USER application:application
+USER 10001:10001
 
 ENTRYPOINT ["/opt/home-loan-calculator/entrypoint.sh"]
 
