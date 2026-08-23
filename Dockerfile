@@ -10,13 +10,15 @@ COPY gradle ./gradle
 COPY build.gradle gradle.properties settings.gradle ./
 COPY src ./src
 
-RUN chmod +x gradlew && ./gradlew bootJar --no-daemon
+RUN chmod +x gradlew \
+    && ./gradlew bootJar --no-daemon \
+    && find build/libs -maxdepth 1 -type f -name '*.jar' ! -name '*-plain.jar' -exec cp {} home-loan-calculator.jar \;
 
 FROM amazoncorretto:25.0.4-al2023-headless
 
 WORKDIR /opt/home-loan-calculator
 
-COPY --from=build --chown=10001:10001 /workspace/build/libs/*-boot.jar home-loan-calculator.jar
+COPY --from=build --chown=10001:10001 /workspace/home-loan-calculator.jar ./home-loan-calculator.jar
 COPY --chown=10001:10001 entrypoint.sh ./entrypoint.sh
 
 RUN chmod +x entrypoint.sh
