@@ -1,4 +1,4 @@
-package io.github.djordjije11.homeloancalculator.config;
+package io.github.djordjije11.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

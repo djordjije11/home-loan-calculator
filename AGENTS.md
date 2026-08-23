@@ -20,8 +20,8 @@ elsewhere.
     - `*.domain`: entities, value objects, domain exceptions, factories, repository interfaces, and domain/application configuration records.
     - `*.infra`: inbound/outbound adapters and persistence-facing adapters, without domain business rules.
     - `*.query`: read-only projections and query repositories.
-    - `ch.autoscout24.config`: Spring wiring and cross-cutting configuration.
-    - `ch.autoscout24.integration.external.*`: external system clients and transport contracts.
+    - `io.github.djordjije11.config`: Spring wiring and cross-cutting configuration.
+    - `io.github.djordjije11.integration.external.*`: external system clients and transport contracts.
 - Keep read projections consumer-driven and minimal. Add only fields required by current consumers; do not mirror full aggregate state by default.
 - When one module consumes another module in-process:
     - keep the consuming module dependent on its own port and projection, not provider-side types,
@@ -61,8 +61,8 @@ elsewhere.
 - REST controllers use `/api/v1` as the base path.
 - Use `PUT` for idempotent state updates and `POST` for executable actions and commands.
 - Controller methods must define `@PreAuthorize` rules that match the route scope.
-- When authorization depends on seller identity, use seller-scoped routes (`/api/v1/sellers/{sellerId}/...`) and combine capability checks with seller ownership
-  checks through `@authenticationChecker`.
+- When authorization depends on user identity, use user-scoped routes (`/api/v1/users/{userId}/...`) and combine capability checks with user ownership checks
+  through `@authenticationChecker`.
 - Global OpenAPI bearer auth is configured centrally; do not repeat method-level security declarations unless an endpoint intentionally differs.
 - For request DTOs and controller parameters, prefer descriptive names over generic names like `dto` or `payload`.
 - For monetary request fields in this service, use `@NotNull`, `@Positive`, and `@Max(value = 9999999)` unless a documented contract requires otherwise.
@@ -117,7 +117,7 @@ elsewhere.
 
 - Use `jakarta.validation.ClockProvider` in Spring configuration, resolve `Clock` in the service constructor, and pass it into domain operations that depend on
   current time.
-- Use `@ConfigurationProperties` record classes for externalized domain and application configuration and keep properties under `autoscout24.*` in
+- Use `@ConfigurationProperties` record classes for externalized domain and application configuration and keep properties under `djordjije11.*` in
   `src/main/resources/application.yaml`.
 - Repository interfaces extend `org.springframework.data.repository.Repository` and declare only required methods explicitly.
 - Keep aggregate repository and support repository responsibilities separate:
@@ -161,8 +161,8 @@ elsewhere.
     - avoid one-off intermediate path constants,
     - use different example values for different route identifiers,
     - use the shared public API example ID namespace in controller and contract fixtures, and keep different resource types on different example IDs such as
-      `sellerId = 1001`, `listingId = 1101`, and nested listing-scoped child resource IDs in a separate range like `1201+`, unless the fixture already follows
-      an established alternative,
+      `userId = 1001`, `listingId = 1101`, and nested listing-scoped child resource IDs in a separate range like `1201+`, unless the fixture already follows an
+      established alternative,
     - keep identifier values consistent across URL placeholders, auth claims, test inputs, and service verifications,
     - for endpoints without request DTOs or JSON bodies, keep controller integration tests focused on the happy path; add invalid-request `400` coverage only
       for endpoints that accept request DTOs or JSON bodies,
@@ -174,7 +174,7 @@ elsewhere.
 - In `*ControllerBase` contract tests, keep standard mocked service return values in the matching `*ControllerContractDataFixture` and reuse them from both the
   base class and related controller tests instead of constructing those return objects inline.
 - Contract fixtures live under `src/test/resources/fixture/contract/<controllerName>/`, and the matching Spring Cloud Contract base class lives under
-  `src/test/java/ch/autoscout24/contract/` as `<ControllerName>Base`.
+  `src/test/java/io/github/djordjije11/contract/` as `<ControllerName>Base`.
 
 ### Unit Test Conventions
 
