@@ -1,5 +1,8 @@
 FROM amazoncorretto:25.0.4 AS build
 
+RUN dnf install -y findutils \
+    && dnf clean all
+
 WORKDIR /workspace
 
 COPY gradlew ./
